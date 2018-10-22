@@ -53,11 +53,13 @@ var
   url: string;
 begin
   url := methodendpoint + method + '?access_token=' + self.token + '&v=' + self.v + '&';
+  var prms := new StringBuilder;
   for var i := 0 to parameters.Length - 1 do 
   begin
-    if i = parameters.Length - 1 then url += parameters[i]
-    else url += parameters[i] + '&';
+    if i = parameters.Length - 1 then prms.Append(parameters[i])
+    else prms.Append(parameters[i] + '&');
   end;
+  url+=prms.ToString();
   var request: HTTPWebRequest := HTTPWebRequest(WebRequest.Create(url));
   request.Method := 'GET';
   var resp: WebResponse := request.GetResponse();
